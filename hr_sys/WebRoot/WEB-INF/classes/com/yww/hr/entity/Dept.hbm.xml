@@ -1,0 +1,15 @@
+<?xml version="1.0"?>
+<!DOCTYPE hibernate-mapping PUBLIC
+      "-//Hibernate/Hibernate Mapping DTD 3.0//EN"
+          "http://www.hibernate.org/dtd/hibernate-mapping-3.0.dtd">
+
+<hibernate-mapping package="com.yww.hr.entity">
+	
+	<!-- 处理session关闭后的懒加载问题的方式二——lazy="false" -->
+    <class name="Dept" table="t_dept">	
+        <id name="id" column="deptid">
+            <generator class="native" />
+        </id>
+        <property name="name" unique="true" not-null="true" length="20"/>
+	</class>
+</hibernate-mapping>

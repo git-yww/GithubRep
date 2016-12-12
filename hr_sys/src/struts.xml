@@ -1,0 +1,57 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE struts PUBLIC "-//Apache Software Foundation//DTD Struts Configuration 2.1//EN" "http://struts.apache.org/dtds/struts-2.1.dtd">
+<struts>
+	<package name="admin" extends="struts-default">
+	
+		<!-- 拦截器配置——如果没有自定义的拦截器，则无需配置 -->
+		<interceptors>
+			<interceptor name="userLoginInterceptor" class="com.yww.hr.action.UserLoginInterceptor"></interceptor>
+			<interceptor-stack name="myStack">
+				<interceptor-ref name="defaultStack"/>
+				<interceptor-ref name="userLoginInterceptor"/>
+			</interceptor-stack>
+		</interceptors>
+		<!-- 执行拦截器 -->
+		<default-interceptor-ref name="myStack"></default-interceptor-ref>
+		
+		<!-- 全局视图 -->
+		<global-results>
+			<result name="success">/index.jsp</result>
+			<result name="login" type="redirect">/login.jsp</result>
+			<!-- 错误视图配置 -->
+			<result name="null">/error/null.jsp</result>
+			<result name="error">/error/error.jsp</result>
+		</global-results>
+		<!--  
+		<global-exception-mappings>
+			<exception-mapping result="null" exception="java.lang.NullPointerExeption"/>
+			<exception-mapping result="error" exception="java.lang.Exception"></exception-mapping>
+		</global-exception-mappings>
+		-->
+		<!-- 【Action的创建交给Spring容器完成】 -->
+		<!-- Employee Action -->
+		<action name="emp_*" class="employeeAction" method="{1}">
+			<!-- 列表展示 -->
+			<result name="list">/WEB-INF/list.jsp</result>
+			<!-- 跳转至添加员工页面 -->
+			<result name="add">/WEB-INF/add.jsp</result>
+			<!-- 员工添加成功，进入列表展示视图 (防止刷新就多一条记录的问题，所以用重定向)-->
+			<result name="listAction" type="redirectAction">emp_list</result>
+			<!-- 跳转至修改员工页面 -->
+			<result name="update">/WEB-INF/update.jsp</result>
+			
+			<result name="search">/WEB-INF/searchResult.jsp</result>
+		</action>
+		
+		<!-- 管理员Action -->
+		<action name="admin_*" class="adminAction" method="{1}">
+			<!-- 登录成功 -->
+			<result name="index" type="redirectAction">emp_list</result>
+			<!-- 登录失败 -->
+			<result name="loginFailed">/login.jsp</result>
+			<!-- 注册成功 -->
+			<result name="login" type="redirect">/login.jsp</result>
+		</action>
+		
+	</package>
+</struts>    

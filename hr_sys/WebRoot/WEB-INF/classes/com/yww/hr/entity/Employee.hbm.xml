@@ -1,0 +1,22 @@
+<?xml version="1.0"?>
+<!DOCTYPE hibernate-mapping PUBLIC
+      "-//Hibernate/Hibernate Mapping DTD 3.0//EN"
+          "http://www.hibernate.org/dtd/hibernate-mapping-3.0.dtd">
+
+<hibernate-mapping package="com.yww.hr.entity">
+
+    <class name="Employee" table="t_employee">
+        
+        <id name="id" column="empid">
+            <generator class="native" />
+        </id>
+        
+        <property name="name" not-null="true" length="20"/>
+        
+        <property name="salary" length="20"></property>
+        
+        <many-to-one name="dept" column="deptid" class="Dept"/>
+        
+    </class>
+
+</hibernate-mapping>
